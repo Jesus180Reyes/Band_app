@@ -157,7 +157,12 @@ class _HomePageState extends State<HomePage> {
     return SizedBox(
       height: 200,
       width: double.infinity,
-      child: PieChart(dataMap: dataMap),
+      child: PieChart(
+        dataMap: dataMap,
+        chartValuesOptions: const ChartValuesOptions(
+          decimalPlaces: 0,
+        ),
+      ),
     );
   }
 

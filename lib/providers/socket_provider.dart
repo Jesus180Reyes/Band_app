@@ -15,7 +15,7 @@ class SocketService extends ChangeNotifier {
     _initConfig();
   }
   void _initConfig() {
-    _socket = io.io('http://192.168.0.108:3000', {
+    _socket = io.io('https://flutter-socket-server-reyes.herokuapp.com/', {
       'transports': ['websocket'],
       'autoConnect': true,
     });
@@ -29,7 +29,7 @@ class SocketService extends ChangeNotifier {
       // print('disconected');
       notifyListeners();
     });
-    // socket.on('nuevo-mensaje', (data) {
+    // socket.on('nuevo-mensaje', (data) {6
     //   print('nuevo mensaje');
     //   print('nombre' + data['nombre']);
     //   print('mensaje ' + data['mensaje']);
