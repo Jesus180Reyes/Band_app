@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:animate_do/animate_do.dart';
 import 'package:band_app/data/data.dart';
 import 'package:band_app/models/band_model.dart';
+import 'package:band_app/pages/noitem_page.dart';
 import 'package:band_app/providers/socket_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,31 +46,32 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
-          'Bands',
+          'Votaciones ',
           style: TextStyle(
             color: Colors.black,
           ),
         ),
         actions: [
           Container(
-              margin: const EdgeInsets.only(right: 10),
-              child: socketService.serverStatus != ServerStatus.online
-                  ? BounceInDown(
-                      duration: const Duration(milliseconds: 500),
-                      from: 10,
-                      child: const Icon(
-                        Icons.offline_bolt,
-                        color: Colors.red,
-                      ),
-                    )
-                  : BounceInDown(
-                      duration: const Duration(milliseconds: 500),
-                      from: 10,
-                      child: Icon(
-                        Icons.check_circle,
-                        color: Colors.green[200],
-                      ),
-                    )),
+            margin: const EdgeInsets.only(right: 10),
+            child: socketService.serverStatus != ServerStatus.online
+                ? BounceInDown(
+                    duration: const Duration(milliseconds: 500),
+                    from: 10,
+                    child: const Icon(
+                      Icons.offline_bolt,
+                      color: Colors.red,
+                    ),
+                  )
+                : BounceInDown(
+                    duration: const Duration(milliseconds: 500),
+                    from: 10,
+                    child: Icon(
+                      Icons.check_circle,
+                      color: Colors.green[200],
+                    ),
+                  ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -78,9 +80,10 @@ class _HomePageState extends State<HomePage> {
         child: const Icon(Icons.add),
       ),
       body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
-            _showGraph(),
+            (bands.isNotEmpty) ? _showGraph() : const NoItemWidget(),
             const SizedBox(height: 30),
             ...bands
                 .map((e) => _BandsWisget(
@@ -159,8 +162,10 @@ class _HomePageState extends State<HomePage> {
       width: double.infinity,
       child: PieChart(
         dataMap: dataMap,
+        animationDuration: const Duration(milliseconds: 800),
         chartValuesOptions: const ChartValuesOptions(
           decimalPlaces: 0,
+          showChartValuesInPercentage: true,
         ),
       ),
     );
